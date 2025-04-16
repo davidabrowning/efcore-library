@@ -23,5 +23,12 @@ namespace Library.Tests
             else
                 PrintFailure(title, expected, actual);
         }
+        public static void AssertNotEquals(string title, object first, object second)
+        {
+            if (Equals(first, second))
+                PrintFailure(title, false, true);
+            else
+                PrintSuccess(title);
+        }
     }
 }
