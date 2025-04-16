@@ -10,5 +10,6 @@ namespace EFCoreLibrary.DataAccess
     {
         public int MemberId { get; set; }
         public string EmailAddress { get; set; }
+        public virtual List<Book> BorrowedBooks {  get; set; }
     }
 }

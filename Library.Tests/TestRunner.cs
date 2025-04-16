@@ -9,13 +9,14 @@ namespace Library.Tests
             string title;
             int initialCount, finalCount;
             LibraryDbContext dbCtx = new LibraryDbContext();
-            BookRepository bookRepository = new BookRepository(dbCtx);
+            IRepository<Book> bookRepository = new BookRepository(dbCtx);
+            IRepository<Member> memberRepository = new MemberRepository(dbCtx);
 
-            Console.WriteLine("Running tests...");
+            TestPrep(bookRepository);
 
-            title = "Books count is not initially 0";
+            title = "Books count is initially 0";
             finalCount = bookRepository.GetAll().Count();
-            TestHelper.AssertNotEquals(title, 0, finalCount);
+            TestHelper.AssertEquals(title, 0, finalCount);
 
             title = "Books count increases by 1 when book added to db";
             initialCount = bookRepository.GetAll().Count();
@@ -24,6 +25,18 @@ namespace Library.Tests
             finalCount = bookRepository.GetAll().Count();
             TestHelper.AssertEquals(title, 1, finalCount - initialCount);
 
+            title = "Members count increases by 1 when member added to db";
+            initialCount = memberRepository.GetAll().Count();
+            memberRepository.Add(new Member() { EmailAddress = "test@test.com" });
+            memberRepository.SaveChanges();
+            finalCount = memberRepository.GetAll().Count();
+            TestHelper.AssertEquals(title, 1, finalCount - initialCount);
+
+        }
+        private void TestPrep<T>(IRepository<T> repository)
+        {
+            repository.DeleteAll();
+            repository.SaveChanges();
         }
     }
 }

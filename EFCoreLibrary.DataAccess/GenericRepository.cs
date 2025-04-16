@@ -26,5 +26,11 @@ namespace EFCoreLibrary.DataAccess
         {
             _dbCtx.SaveChanges();
         }
+        public IEnumerable<T> DeleteAll()
+        {
+            IEnumerable<T> entities = GetAll();
+            _dbCtx.RemoveRange(entities);
+            return entities;
+        }
     }
 }

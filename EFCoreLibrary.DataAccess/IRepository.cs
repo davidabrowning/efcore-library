@@ -11,5 +11,6 @@ namespace EFCoreLibrary.DataAccess
         T Add(T entity);
         IEnumerable<T> GetAll();
         void SaveChanges();
+        IEnumerable<T> DeleteAll();
     }
 }
